@@ -14,7 +14,7 @@ So the general workflow would be:
 - The person puts in a link to the live stream into any VRChat video player where everyone can view the stream
 
 # General stuff
-- Use a Server with a fairly new CPU (+4 threads) because this will live encode two 1080p streams which is resource intensive.
+- Use a Server with a fairly new CPU (+4 threads) because this will live encode two 1080p streams which is resource intensive. Check out [Recommended Specs](https://neko.m1k1o.net/#/getting-started/quick-start?id=quick-start).
 - Use HLS as streaming method to VRChat (despite it having higher latency ~7s -> which should not matter much when just streaming a video anyway). It also supports RTSP (and more), which has much lower latency, but apparently due Bugs in Android's media codec it might not work for e.g. Quest Users or other standalone VR-Headsets.
 - Use H.264 Codec for maximum compatibility, e.g. H.265 or VP9 might not work on some PC's or standalone VR-Headsets.
 - I'd recommend a fixed Bitrate of minimum 4000kbps for decent video quality, especially when watching dark/hectic video scenes to prevent the video to look mushy. (I will include an example for variable Bitrate, but commented out. In case video quality is less important, or you want to save on Bandwidth. (`NEKO_BROADCAST_PIPELINE` parameter in the docker-compose file))
