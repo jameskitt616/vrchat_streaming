@@ -59,3 +59,5 @@ You can now open the live stream in VRChat (or VLC) at `https://mtx.youdomain.tl
 
 # Updating
 1. Run `docker compose pull && docker compose up -d && docker image prune -f`
+
+### Feel free to open an issue or [contact me](https://jameskitt616.one/contact/) for suggestions/questions/help.
