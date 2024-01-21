@@ -1,0 +1,42 @@
+version: "3.5"
+
+networks:
+  default:
+    attachable: true
+    name: neko-rooms-net
+
+services:
+  neko-rooms:
+    image: m1k1o/neko-rooms:latest
+    container_name: neko_rooms
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Berlin
+      NEKO_ROOMS_MUX: true
+      NEKO_ROOMS_EPR: 52000-52100
+      NEKO_ROOMS_INSTANCE_URL: https://neko.youdomain.tld/
+      NEKO_ROOMS_INSTANCE_NETWORK: neko-rooms-net
+      NEKO_ROOMS_TRAEFIK_ENABLED: false
+      NEKO_ROOMS_PATH_PREFIX: /live/
+    ports:
+      - "80:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  rtsp_server:
+    image: bluenviron/mediamtx:latest-ffmpeg
+    container_name: mediamtx
+    restart: unless-stopped
+    ports:
+      - "8554:8554" # RTSP
+      - "1935:1935" # RTMP
+      - "8888:8888" # HLS
+      #- "8889:8889" # WebRTC
+      #- "8890:8890" # SRT
+    environment:
+      MTX_PROTOCOLS: tcp
+      #MTX_WEBRTCADDITIONALHOSTS: mtx.yourdomain.tld # most likely not needed
+      MTX_HLSALWAYSREMUX: yes
+      MTX_HLSVARIANT: mpegts # do not change this for maximum compatibility
+      MTX_HLSSEGMENTCOUNT: 7
+      MTX_HLSSEGMENTDURATION: 1s
