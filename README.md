@@ -14,7 +14,7 @@ So the general workflow would be:
 - The person puts in a link to the live stream into any VRChat video player where everyone can view the stream
 
 # General stuff
-- Use a Server with a fairly new CPU (+4 threads) because this will live encode two 1080p streams which is resource intensive. Check out [Recommended Specs](https://neko.m1k1o.net/#/getting-started/quick-start?id=quick-start).
+- Use a Server with a fairly new CPU (+4 threads) because this will live encode two 1080p streams which is resource intensive. Check out [Recommended Specs](https://neko.m1k1o.net/#/getting-started/quick-start?id=quick-start). I would absolutely recommend using an iGPU for encoding, pure CPU encoding mostly results in poor performance like low frame live streams.
 - Use HLS as streaming method to VRChat (despite it having higher latency ~7s -> which should not matter much when just streaming a video anyway). It also supports RTSP (and more), which has much lower latency, but apparently due Bugs in Android's media codec it might not work for e.g. Quest Users or other standalone VR-Headsets.
 - Use H.264 Codec for maximum compatibility, e.g. H.265 or VP9 might not work on some PC's or standalone VR-Headsets.
 - I'd recommend a fixed Bitrate of minimum 4000kbps for decent video quality, especially when watching dark/hectic video scenes to prevent the video to look mushy. (I will include an example for variable Bitrate, but commented out. In case video quality is less important, or you want to save on Bandwidth. (`NEKO_BROADCAST_PIPELINE` parameter in the docker-compose file))
@@ -27,6 +27,18 @@ So the general workflow would be:
 - For HLS you do not need to open any extra ports, i also suggest to reverse-proxy with a dedicated subdomain to mediamtx e.g. `mtx.yourdomain.tld` -> `localip:8888`. If you do not reverse proxy HLS, you need to opern port `8888`.
 - If you want to use RTSP, you need to open Port `8554`.
 - I'd absolutely suggest you to use a reverse-proxy AND use SSL/TLS for a secure connection, setting this up goes beyond this guide.
+
+# Single stream instance iGPU (recommended)
+1. If not already done, [install Docker and Docker Compose (v2.10+)](https://docs.docker.com/engine/install/)
+2. Copy and configure your docker compose
+   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/main/docker-compose.single-room-igpu.yml`
+3. Update the passwords in the docker compose file
+4. Run `docker compose up -d` to run the Docker containers in detached daemon mode
+5. If you set up your reverse-proxy properly you can now open n.eko in your local Browser and the HLS live stream in VRChat.
+
+You will now find your n.eko at `https://neko.yourdomain.tld` \
+You can now open the live stream in VRChat (or VLC) at `https://mtx.youdomain.tld/live/index.m3u8` \
+(Optionally you can open the live stream in your local Browser as well at `https://mtx.youdomain.tld/live`)
 
 # Single stream instance
 1. If not already done, [install Docker and Docker Compose (v2.10+)](https://docs.docker.com/engine/install/)
