@@ -9,6 +9,8 @@ services:
       - "80:8080"
       - "52000-52100:52000-52100/udp"
     environment:
+      #LIBVA_DRIVER_NAME: i915
+      TZ: Europe/Berlin
       NEKO_SCREEN: 1920x1080@30
       NEKO_PASSWORD: changeMe
       NEKO_PASSWORD_ADMIN: changeMe
