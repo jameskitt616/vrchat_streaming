@@ -1,4 +1,3 @@
-version: "3.4"
 services:
   neko:
     image: m1k1o/neko:firefox
