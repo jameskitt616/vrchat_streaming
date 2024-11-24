@@ -47,19 +47,13 @@ TODO: Add networking, OS setup (like WSL, linux, nvidia drivers etc) into Prereq
 
 TODO: explain difference between single/multi room
 
-| Transcode Type        | Single Room                                                                                   | Multi Room                                                                                   |
-|-----------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
-| CPU (not recommended) | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-igpu.md) | not docs/supported yet                                                                       |
-| iGPU Intel            | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-cpu.md)  | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/multi-room-igpu.md) |
-| iGPU AMD              | not docs/supported yet                                                                        | not docs/supported yet                                                                       |
-| dGPU Nvidia           | not docs/supported yet                                                                        | not docs/supported yet                                                                       |
-| dGPU AMD              | not docs/supported yet                                                                        | not docs/supported yet                                                                       |
-
-[Single stream instance iGPU (recommended)](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-igpu.md)
-
-[Single stream instance (not recommended)](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-cpu.md)
-
-[Multi stream instance iGPU](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/multi-room-igpu.md)
+| Transcode Type        | Single Room (Linux)                                                                           | Multi Room (Linux)                                                                           | Single Room (Windows)  | Multi Room (Windows)   |
+|-----------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|------------------------|------------------------|
+| CPU (not recommended) | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-igpu.md) | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
+| iGPU Intel            | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-cpu.md)  | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/multi-room-igpu.md) | not docs/supported yet | not docs/supported yet |
+| iGPU AMD              | not docs/supported yet                                                                        | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
+| dGPU Nvidia           | not docs/supported yet                                                                        | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
+| dGPU AMD              | not docs/supported yet                                                                        | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
 
 # Updating
 
