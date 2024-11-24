@@ -31,7 +31,7 @@ So the general workflow would be:
 # Single stream instance iGPU (recommended)
 1. If not already done, [install Docker and Docker Compose (v2.10+)](https://docs.docker.com/engine/install/)
 2. Copy and configure your docker compose
-   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/head/master/docker-compose.single-room-igpu.yml`
+   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/docker-compose.single-room-igpu.yml`
 3. Update the passwords in the docker compose file
 4. Run `docker compose up -d` to run the Docker containers in detached daemon mode
 5. If you set up your reverse-proxy properly you can now open n.eko in your local Browser and the HLS live stream in VRChat.
@@ -44,7 +44,7 @@ You can now open the live stream in VRChat (or VLC) at `https://mtx.youdomain.tl
 > Can lead to serious lags, video artifacts etc.
 1. If not already done, [install Docker and Docker Compose (v2.10+)](https://docs.docker.com/engine/install/)
 2. Copy and configure your docker compose
-   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/head/master/docker-compose.single-room.yml`
+   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/docker-compose.single-room.yml`
 3. Update the passwords in the docker compose file
 4. Run `docker compose up -d` to run the Docker containers in detached daemon mode
 5. If you set up your reverse-proxy properly you can now open n.eko in your local Browser and the HLS live stream in VRChat.
@@ -56,7 +56,7 @@ You can now open the live stream in VRChat (or VLC) at `https://mtx.youdomain.tl
 # Multi stream instance
 1. If not already done, [install Docker and Docker Compose (v2.10+)](https://docs.docker.com/engine/install/)
 2. Copy and configure your docker compose
-   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/head/master/docker-compose.multi-room.yml`
+   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/docker-compose.multi-room.yml`
 3. Update the passwords in the docker compose file
 4. Create a users file to protect the neko-rooms admin panel `htpasswd -bc usersfile admin 'your-secure-password'`
 5. Run `docker compose up -d` to run the Docker containers in detached daemon mode
