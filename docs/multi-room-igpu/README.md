@@ -1,7 +1,7 @@
 # Multi stream instance
 1. If not already done, [install Docker and Docker Compose](https://docs.docker.com/engine/install/)
 2. Copy and configure your docker compose
-   file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/multi-room-igpu/compose.yaml`
+   file `curl -L -o compose.yaml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/docs/multi-room-igpu/compose.yaml`
 3. Update the passwords in the docker compose file
 4. Create a users file to protect the neko-rooms admin panel `htpasswd -bc usersfile admin 'your-secure-password'` (you need to have `apache2-utils` for `htpasswd` installed)
 5. Run `docker compose up -d` to run the Docker containers in detached daemon mode
