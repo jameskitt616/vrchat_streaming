@@ -59,6 +59,7 @@ Multi-Room Installation: With this option, you can create multiple virtual rooms
 
 1. Run `docker compose pull && docker compose up -d && docker image prune -f`
 
+# Closing words
 ### Feel free to open an issue or [contact me](https://jameskitt616.one/contact/) for suggestions/questions/help.
 
 ### Thanks to [tenten8401](https://github.com/tenten8401)!
