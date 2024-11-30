@@ -1,11 +1,18 @@
 # Multi stream instance
+
+### Prerequisites
+
 1. If not already done, [install Docker and Docker Compose](https://docs.docker.com/engine/install/)
-2. Copy and configure your docker compose
+2. Configure [networking](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/networking.md)
+
+### Install
+
+1. Copy and configure your docker compose
    file `curl -L -o compose.yaml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/docs/multi-room-igpu/compose.yaml`
-3. Update the passwords in the docker compose file
-4. Create a users file to protect the neko-rooms admin panel `htpasswd -bc usersfile admin 'your-secure-password'` (you need to have `apache2-utils` for `htpasswd` installed)
-5. Run `docker compose up -d` to run the Docker containers in detached daemon mode
-6. If you set up your reverse-proxy properly you can now open n.eko in your local Browser.
+2. Update the passwords in the docker compose file
+3. Create a users file to protect the neko-rooms admin panel `htpasswd -bc usersfile admin 'your-secure-password'` (you need to have `apache2-utils` for `htpasswd` installed)
+4. Run `docker compose up -d` to run the Docker containers in detached daemon mode
+5. If you set up your reverse-proxy properly you can now open n.eko in your local Browser.
 
 You will now find your n.eko at `https://neko.yourdomain.tld`
 
