@@ -1,6 +1,6 @@
 # Single stream instance (CPU) (not recommended)
 > Can lead to serious lags, video artifacts etc.
-1. If not already done, [install Docker and Docker Compose (v2.10+)](https://docs.docker.com/engine/install/)
+1. If not already done, [install Docker and Docker Compose](https://docs.docker.com/engine/install/)
 2. Copy and configure your docker compose
    file `curl -L -o docker-compose.yml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/single-room-cpu/compose.yaml`
 3. Update the passwords in the docker compose file
