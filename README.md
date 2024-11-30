@@ -54,6 +54,7 @@ Multi-Room Installation: With this option, you can create multiple virtual rooms
 | iGPU AMD              | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
 | dGPU Nvidia           | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
 | dGPU AMD              | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
+| dGPU Intel Arc        | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
 
 # Updating
 
