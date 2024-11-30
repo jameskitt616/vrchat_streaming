@@ -41,19 +41,19 @@ So the general workflow would be:
   `NEKO_PASSWORD_ADMIN`) who can operate n.eko. In general i recommend reading through
   the [n.eko docs](https://neko.m1k1o.net/#/getting-started/configuration) and configure n.eko to your liking.
 
-TODO: Add networking, OS setup (like WSL, linux, nvidia drivers etc) into Prerequisites section
-
 # Install instructions
 
-TODO: explain difference between single/multi room
+Single Room Installation: This option allows for the installation and setup of a single room and stream at a time.
 
-| Transcode Type        | Single Room (Linux)                                                                           | Multi Room (Linux)                                                                           | Single Room (Windows)  | Multi Room (Windows)   |
-|-----------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|------------------------|------------------------|
-| CPU (not recommended) | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-igpu.md) | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
-| iGPU Intel            | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-cpu.md)  | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/multi-room-igpu.md) | not docs/supported yet | not docs/supported yet |
-| iGPU AMD              | not docs/supported yet                                                                        | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
-| dGPU Nvidia           | not docs/supported yet                                                                        | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
-| dGPU AMD              | not docs/supported yet                                                                        | not docs/supported yet                                                                       | not docs/supported yet | not docs/supported yet |
+Multi-Room Installation: With this option, you can create multiple virtual rooms and streams, enabling several users to operate different virtual browsers simultaneously.
+
+| Transcode Type        | Single Room (Linux)                                                                                  | Multi Room (Linux)                                                                                  | Single Room (Windows)  | Multi Room (Windows)   |
+|-----------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|------------------------|------------------------|
+| CPU (not recommended) | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-igpu/README.md) | not docs/supported yet                                                                              | not docs/supported yet | not docs/supported yet |
+| iGPU Intel            | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-cpu/README.md)  | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/multi-room-igpu/README.md) | not docs/supported yet | not docs/supported yet |
+| iGPU AMD              | not docs/supported yet                                                                               | not docs/supported yet                                                                              | not docs/supported yet | not docs/supported yet |
+| dGPU Nvidia           | not docs/supported yet                                                                               | not docs/supported yet                                                                              | not docs/supported yet | not docs/supported yet |
+| dGPU AMD              | not docs/supported yet                                                                               | not docs/supported yet                                                                              | not docs/supported yet | not docs/supported yet |
 
 # Updating
 
