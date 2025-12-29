@@ -84,7 +84,7 @@ services:
       - neko_net
     ports:
       - "8554:8554"   # RTSP output e.g. rtsp://server-ip:8555/live (RTSP playback doesn't work for Standalone Headsets, only for PC)
-      - "8888:8888"   # HLS output e.g. http://server-ip:8889/live/index.m3u8
+      - "8888:8888"   # HLS output e.g. https://server-ip:8889/live/index.m3u8
     environment:
       MEDIAMTX_RTSPTRANSPORTS: "tcp"
       # Audio encoder (force stereo)
