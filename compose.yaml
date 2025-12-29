@@ -26,7 +26,6 @@ services:
       # ---- Desktop ----
       NEKO_DESKTOP_SCREEN: "1920x1080@30"
       # ---- Auth ----
-      NEKO_MEMBER_PROVIDER: "multiuser"
       NEKO_MEMBER_MULTIUSER_USER_PASSWORD: "changeMe"
       NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: "changeMe"
       NEKO_SESSION_CONTROL_PROTECTION: "true"
