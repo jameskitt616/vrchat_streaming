@@ -1,0 +1,100 @@
+networks:
+  neko_net:
+    driver: bridge
+
+services:
+  neko:
+    image: ghcr.io/m1k1o/neko/intel-firefox:latest
+    container_name: neko
+    restart: unless-stopped
+    shm_size: 4gb
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/dri:/dev/dri
+    networks:
+      - neko_net
+    ports:
+      - "80:8080"                      # Web interface
+      - "52000-52100:52000-52100/udp"  # WebRTC
+    environment:
+      TZ: "Europe/Berlin"
+      # ---- WebRTC ----
+      #NEKO_WEBRTC_NAT1TO1: "192.168.x.x" # This setting is required only to access Neko locally (using the server's local IP) without a reverse proxy. To access it via a domain, this setting can be removed.
+      NEKO_WEBRTC_EPR: "52000-52100"
+      NEKO_WEBRTC_ICELITE: "true"
+      # ---- Desktop ----
+      NEKO_DESKTOP_SCREEN: "1920x1080@30"
+      # ---- Auth ----
+      NEKO_MEMBER_PROVIDER: "multiuser"
+      NEKO_MEMBER_MULTIUSER_USER_PASSWORD: "changeMe"
+      NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: "changeMe"
+      NEKO_SESSION_CONTROL_PROTECTION: "true"
+      # ---- Capture pipelines ----
+      NEKO_SERVER_PROXY: "true"
+      NEKO_CAPTURE_VIDEO_CODEC: "h264"
+      NEKO_CAPTURE_BROADCAST_URL: "placeholder" # No need to chance this line, it's handled by NEKO_CAPTURE_BROADCAST_PIPELINE. It's only needed to be filled so it's possible to start the Broadcast
+      NEKO_BROADCAST_AUTOSTART: "false"
+      NEKO_CAPTURE_VIDEO_PIPELINE: >
+        ximagesrc display-name={display} show-pointer=true use-damage=false !
+        videoconvert !
+        videorate !
+        videoscale !
+        video/x-raw,width=1920,height=1080,framerate=30/1 !
+        vaapih264enc rate-control=cbr bitrate=6144 keyframe-period=30 !
+        h264parse !
+        queue !
+
+        pulsesrc device=audio_output.monitor !
+        audioconvert !
+        audioresample !
+        audio/x-raw,channels=2 !
+        voaacenc bitrate=320000 !
+        aacparse !
+        queue !
+        mux.
+      NEKO_CAPTURE_BROADCAST_PIPELINE: >
+        ximagesrc display-name={display} show-pointer=true use-damage=false !
+        queue max-size-buffers=2 leaky=downstream !
+        videoconvert !
+        videorate !
+        videoscale !
+        video/x-raw,width=1920,height=1080,framerate=30/1 !
+        vaapih264enc rate-control=cbr bitrate=6144 keyframe-period=30 !
+        h264parse !
+        queue !
+        mpegtsmux name=mux alignment=7 !
+        udpsink host=mediamtx port=1234 sync=false buffer-size=524288
+
+        pulsesrc device=audio_output.monitor !
+        queue !
+        audioconvert !
+        audioresample !
+        audio/x-raw,channels=2 !
+        voaacenc bitrate=320000 !
+        aacparse !
+        queue !
+        mux.
+
+  mediamtx:
+    image: bluenviron/mediamtx:latest-ffmpeg
+    container_name: mediamtx
+    restart: unless-stopped
+    networks:
+      - neko_net
+    ports:
+      - "8554:8554"   # RTSP output e.g. rtsp://server-ip:8555/live (RTSP playback doesn't work for Standalone Headsets, only for PC)
+      - "8888:8888"   # HLS output e.g. http://server-ip:8889/live/index.m3u8
+    environment:
+      MEDIAMTX_RTSPTRANSPORTS: "tcp"
+      # Audio encoder (force stereo)
+      MTX_PATHS_LIVE_HLS_AUDIO_ENCODER: "aac"
+      MTX_PATHS_LIVE_HLS_AUDIO_ENCODER_ARGS: "audio_bitrate=320k,channels=2"
+      # ---- Optimized STANDARD HLS (NOT LL-HLS) ----
+      MTX_HLSMODE: "muxer"
+      MTX_HLSVARIANT: "mpegts"
+      MTX_HLSALWAYSREMUX: "yes"
+      MTX_HLSSEGMENTDURATION: "1s"     # 1 second segments
+      MTX_HLSSEGMENTCOUNT: "4"         # ~4s real latency
+      # ---- Neko Broadcast Source ----
+      MTX_PATHS_LIVE_SOURCE: "udp://mediamtx:1234?pkt_size=1316"

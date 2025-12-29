@@ -1,14 +1,17 @@
 # VRChat streaming
 
-Tool to stream anything (e.g. Emby/Plex/Jellyfin etc.) to VRChat without hustle
+Tool to stream anything (e.g. Emby/Plex/Jellyfin/YouTube etc.) to VRChat without hustle
 
 ---
+
+> [!NOTE]
+> The default configuration of this project utilizes the integrated graphics provided by an Intel CPU.
 
 # Project description
 
 [n.eko](https://neko.m1k1o.net/#/) is a virtual-shared Browser which allows multiple people viewing the exact same
 stream of the virtual Browser in your local Browser.
-One person has the control and can input/open any website they want, just like you would operate your local Browser.
+One person has the control and can open any website they want, just like you would operate your local Browser.
 The control can be passed on. Read more about it, on the [n.eko website](https://neko.m1k1o.net/).\
 Taking advantage of that, n.eko brings functionality to also stream that
 output [e.g. via RTMP](https://neko.m1k1o.net/docs/v3/configuration/capture#broadcast) anywhere you like (
@@ -18,43 +21,40 @@ So the general workflow would be:
 - One Person operating n.eko in their local Browser e.g. starting a Video on their self-hosted Emby/Plex/Jellyfin Server
 - n.eko must be set up to stream the output of n.eko (is configured that it happens automatically on n.eko startup in
   this case)
-- The person puts in a link to the live stream into any VRChat video player where everyone can view the stream
+- The person puts in a HLS/RTSP link to the live stream into any VRChat video player where everyone can view the stream
 
 # General infos
 
-- This guide was written for Linux Servers. (Maybe I will investigate for Windows(WSL) use in the future)
-- Use a Server with a fairly modern CPU (+4 threads) because this will live encode two 1080p streams which is resource
-  intensive. Check out [Recommended Specs](https://neko.m1k1o.net/docs/v3/quick-start). I would
-  absolutely recommend using an iGPU for encoding, pure CPU encoding mostly results in poor performance like low frame
-  live streams.
-- Use RTSP to Streams due to better stability. Use HLS (despite it having higher latency ~7s -> which should not matter
-  much when just streaming a video anyway) if you need to stream to Quest Users due Bugs in Android's media codec.
+- Use a Server with a fairly modern Intel CPU to also make usage of the iGPU. Check [Recommended Specs](https://neko.m1k1o.net/docs/v3/quick-start).
+- RTSP Streams don't work for Standalone VR-Headsets like Quest 3 due Bugs in Android's media codec, use HLS for this.
 - Use H.264 Codec for maximum compatibility, e.g. H.265 or VP9 might not work on some PC's or standalone VR-Headsets.
-- I'd recommend a fixed Bitrate of minimum 4000kbps for decent video quality, especially when watching dark/hectic video
-  scenes to prevent the video to look mushy. (I will include an example for variable Bitrate, but commented out. In case
-  video quality is less important, or you want to save on Bandwidth. (`NEKO_CAPTURE_BROADCAST_PIPELINE` parameter in the
-  docker-compose file))
-- Depending on your CPU's power you can play with
-  the [encoding presets](https://gstreamer.freedesktop.org/documentation/x264/index.html?gi-language=c#GstX264EncPreset),
-  currently it's set to `speed-preset=veryfast`
+- I'd recommend a fixed Bitrate of minimum 6000kbps for decent video quality.
 - **CHANGE THE PASSWORDS** in the docker-compose file for normal users (`NEKO_MEMBER_MULTIUSER_USER_PASSWORD`) and admins (
   `NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD`) who can operate n.eko. In general i recommend reading through
   the [n.eko docs](https://neko.m1k1o.net/#/getting-started/configuration) and configure n.eko to your liking.
 
 # Install instructions
 
-Single Room Installation: This option allows for the installation and setup of a single room and stream at a time.
+> [!NOTE]
+> The default configuration of this project utilizes the integrated graphics provided by an Intel CPU.
 
-Multi-Room Installation: With this option, you can create multiple virtual rooms and streams, enabling several users to operate different virtual browsers simultaneously.
+### Prerequisites
 
-| Transcode Type        | Single Room (Linux)                                                                                  | Multi Room (Linux)                                                                                  | Single Room (Windows)        | Multi Room (Windows)         |
-|-----------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|------------------------------|------------------------------|
-| CPU (not recommended) | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-cpu/README.md)  | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
-| iGPU Intel            | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/single-room-igpu/README.md) | [docs](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/multi-room-igpu/README.md) | no docs or not supported yet | no docs or not supported yet |
-| iGPU AMD              | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
-| dGPU Nvidia           | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
-| dGPU AMD              | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
-| dGPU Intel Arc        | no docs or not supported yet                                                                         | no docs or not supported yet                                                                        | no docs or not supported yet | no docs or not supported yet |
+1. If not already done, [install Docker and Docker Compose](https://docs.docker.com/engine/install/)
+2. Configure [networking](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/networking.md)
+3. Install Intel Media Driver (I think `apt install intel-media-va-driver` should be enough. Change according to your Linux Distribution)
+
+### Install
+
+1. Copy and configure your docker compose
+   file `curl -L -o compose.yaml https://raw.githubusercontent.com/jameskitt616/vrchat_streaming/refs/heads/master/compose.yaml`
+2. Update the passwords in the docker compose file
+3. Run `docker compose up -d` to run the Docker containers in detached daemon mode
+4. If you set up your reverse-proxy properly you can now open n.eko in your local Browser and the HLS/RTSP live stream in VRChat.
+5. For persistent Browser storage follow https://neko.m1k1o.net/docs/v3/customization/browsers#persistent-profile
+
+You will now find your n.eko at `https://neko.yourdomain.tld` \
+You can now open the live stream in VRChat (or VLC) at `https://mtx.youdomain.tld/live/index.m3u8` \
 
 # Updating
 
