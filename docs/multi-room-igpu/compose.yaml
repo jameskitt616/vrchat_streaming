@@ -1,14 +1,14 @@
 networks:
   default:
     attachable: true
-    name: "neko-rooms"
+    name: neko-rooms
 
 services:
   traefik:
-    image: "traefik:2.4"
-    restart: "unless-stopped"
+    image: traefik:2.4
+    restart: unless-stopped
     environment:
-      - "TZ=Europe/Berlin"
+      TZ: Europe/Berlin
     command:
       - "--providers.docker=true"
       - "--providers.docker.watch=true"
@@ -16,42 +16,38 @@ services:
       - "--providers.docker.network=neko-rooms"
       - "--entrypoints.web.address=:8080"
     ports:
-      - target: 8080
-        published: 80
-        protocol: "tcp"
-        mode: "host"
+      - "80:8080"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./usersfile:/usersfile:ro"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./usersfile:/usersfile:ro
 
   neko-rooms:
-    image: "m1k1o/neko-rooms:latest"
-    restart: "unless-stopped"
+    image: m1k1o/neko-rooms:latest
+    restart: unless-stopped
     environment:
-      - "TZ=Europe/Berlin"
-      - "NEKO_ROOMS_EPR=52000-52100"
-      #- "NEKO_ROOMS_NAT1TO1=192.168.x.x" #local IP to access locally
-      - "NEKO_ROOMS_TRAEFIK_ENTRYPOINT=web"
-      - "NEKO_ROOMS_TRAEFIK_NETWORK=neko-rooms"
-      - "NEKO_PROXY=true"
-      - "NEKO_ROOMS_INSTANCE_URL=https://neko.yourdomain.tld/"
-      - "NEKO_ROOMS_PATH_PREFIX=/room/"
-      - "NEKO_ROOMS_NEKO_IMAGES=ghcr.io/m1k1o/neko/firefox:latest ghcr.io/m1k1o/neko/intel-firefox:latest ghcr.io/m1k1o/neko/intel-chromium:latest ghcr.io/m1k1o/neko/intel-google-chrome:latest ghcr.io/m1k1o/neko/intel-microsoft-edge:latest"
-      - "NEKO_ROOMS_STORAGE_ENABLED=true"
-      - "NEKO_ROOMS_STORAGE_INTERNAL=/data"
-      - "NEKO_ROOMS_STORAGE_EXTERNAL=/root/neko-rooms/data"
-      - "NEKO_ROOMS_DEBUG=1"
+      TZ: Europe/Berlin
+      NEKO_ROOMS_EPR: 52000-52100
+      #NEKO_ROOMS_NAT1TO1: 192.168.x.x #IP of server to access locally
+      NEKO_ROOMS_TRAEFIK_ENTRYPOINT: web
+      NEKO_ROOMS_TRAEFIK_NETWORK: neko-rooms
+      NEKO_ROOMS_INSTANCE_URL: https://neko.yourdomain.tld/
+      NEKO_ROOMS_PATH_PREFIX: /room/
+      NEKO_ROOMS_NEKO_IMAGES: ghcr.io/m1k1o/neko/firefox:latest ghcr.io/m1k1o/neko/intel-firefox:latest ghcr.io/m1k1o/neko/intel-chromium:latest ghcr.io/m1k1o/neko/intel-google-chrome:latest ghcr.io/m1k1o/neko/intel-microsoft-edge:latest
+      NEKO_ROOMS_STORAGE_ENABLED: true
+      NEKO_ROOMS_STORAGE_INTERNAL: /data
+      NEKO_ROOMS_STORAGE_EXTERNAL: /root/neko-rooms/data
+      NEKO_ROOMS_DEBUG: 1
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/root/neko-rooms/data:/data"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/data
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.neko-rooms-frontend.loadbalancer.server.port=8080"
-      - "traefik.http.routers.neko-rooms.entrypoints=web"
-      - "traefik.http.routers.neko-rooms.rule=HostRegexp(`{host:.+}`)"
-      - "traefik.http.routers.neko-rooms.priority=1"
-      - "traefik.http.middlewares.nrooms-auth.basicauth.usersfile=/usersfile"
-      - "traefik.http.routers.neko-rooms.middlewares=nrooms-auth"
+      traefik.enable: true
+      traefik.http.services.neko-rooms-frontend.loadbalancer.server.port: 8080
+      traefik.http.routers.neko-rooms.entrypoints: web
+      traefik.http.routers.neko-rooms.rule: HostRegexp(`{host:.+}`)
+      traefik.http.routers.neko-rooms.priority: 1
+      traefik.http.middlewares.nrooms-auth.basicauth.usersfile: /usersfile
+      traefik.http.routers.neko-rooms.middlewares: nrooms-auth
 
   rtsp_server:
     image: bluenviron/mediamtx:latest-ffmpeg
@@ -69,6 +65,6 @@ services:
       MTX_HLSVARIANT: mpegts #mpegts fmp4 or lowLatency
       MTX_HLSSEGMENTCOUNT: 7
       MTX_HLSSEGMENTDURATION: 2s
-      MTX_PATHS_LIVE_SOURCE: "udp://rtsp_server:1234"
+      MTX_PATHS_LIVE_SOURCE: "udp://rtsp_server:1234" # Configure multiple MTX_PATHS_ if you want to broadcast on multiple rooms concurrently
       MTX_PATHS_PARTY_SOURCE: "udp://rtsp_server:1235"
       MTX_PATHS_MOVIE_SOURCE: "udp://rtsp_server:1236"

@@ -4,6 +4,7 @@
 
 1. If not already done, [install Docker and Docker Compose](https://docs.docker.com/engine/install/)
 2. Configure [networking](https://github.com/jameskitt616/vrchat_streaming/blob/master/docs/networking.md)
+3. Install Intel Media Driver (I think `apt install intel-media-va-driver` should be enough. Change according to your Linux Distribution)
 
 ### Install
 
