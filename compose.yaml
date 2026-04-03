@@ -19,6 +19,7 @@ services:
       - "52000-52100:52000-52100/udp"  # WebRTC
     environment:
       TZ: "Europe/Berlin"
+      NEKO_SERVER_PROXY: "true"
       # ---- WebRTC ----
       #NEKO_WEBRTC_NAT1TO1: "192.168.x.x" # This setting is required only to access Neko locally (using the server's local IP) without a reverse proxy. To access it via a domain, this setting can be removed.
       NEKO_WEBRTC_EPR: "52000-52100"
@@ -30,10 +31,9 @@ services:
       NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: "changeMe"
       NEKO_SESSION_CONTROL_PROTECTION: "true"
       # ---- Capture pipelines ----
-      NEKO_SERVER_PROXY: "true"
       NEKO_CAPTURE_VIDEO_CODEC: "h264"
       NEKO_CAPTURE_BROADCAST_URL: "placeholder" # No need to chance this line, it's handled by NEKO_CAPTURE_BROADCAST_PIPELINE. It's only needed to be filled so it's possible to start the Broadcast
-      NEKO_BROADCAST_AUTOSTART: "false"
+      NEKO_CAPTURE_BROADCAST_AUTOSTART: "false"
       NEKO_CAPTURE_VIDEO_PIPELINE: >
         ximagesrc display-name={display} show-pointer=true use-damage=false !
         videoconvert !
