@@ -4,7 +4,7 @@ networks:
 
 services:
   neko:
-    image: ghcr.io/m1k1o/neko/intel-firefox:latest
+    image: ghcr.io/m1k1o/neko/intel-firefox:3.0.11
     container_name: neko
     restart: unless-stopped
     shm_size: 4gb
@@ -43,15 +43,6 @@ services:
         vaapih264enc rate-control=cbr bitrate=6144 keyframe-period=30 !
         h264parse !
         queue !
-
-        pulsesrc device=audio_output.monitor !
-        audioconvert !
-        audioresample !
-        audio/x-raw,channels=2 !
-        voaacenc bitrate=320000 !
-        aacparse !
-        queue !
-        mux.
       NEKO_CAPTURE_BROADCAST_PIPELINE: >
         ximagesrc display-name={display} show-pointer=true use-damage=false !
         queue max-size-buffers=2 leaky=downstream !
